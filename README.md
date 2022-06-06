@@ -15,7 +15,7 @@ Team password: sanitization_is_hard
 - [ ] Web3
 - [ ] Web4
 - [ ] Web5
-- [ ] Forensic1
+- [x] Forensic1
 - [ ] Forensic2
 - [ ] Forensic3
 - [x] Linux1
