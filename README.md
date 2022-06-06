@@ -21,8 +21,8 @@ Team password: sanitization_is_hard
 - [ ] Linux1
 - [ ] Linux2
 - [ ] Linux3
-- [ ] Crypto1
-- [ ] Crypto2
+- [x] Crypto1
+- [x] Crypto2
 - [ ] Crypto3
 - [ ] Crypto4
 - [ ] Crypto5
