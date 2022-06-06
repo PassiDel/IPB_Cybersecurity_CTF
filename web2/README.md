@@ -1,6 +1,6 @@
 # Web Hacking 02
 ```bash
-IP=http://192.168.10.5:8090
+URL=http://192.168.10.5:8090
 ```
 
 ## Browser
