@@ -18,7 +18,7 @@ Team password: sanitization_is_hard
 - [ ] Forensic1
 - [ ] Forensic2
 - [ ] Forensic3
-- [ ] Linux1
+- [x] Linux1
 - [ ] Linux2
 - [ ] Linux3
 - [x] Crypto1
