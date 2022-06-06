@@ -11,7 +11,7 @@ Team password: sanitization_is_hard
 - [ ] CTF3
 - [ ] CTF4
 - [x] Web1
-- [ ] Web2
+- [x] Web2
 - [ ] Web3
 - [ ] Web4
 - [ ] Web5
