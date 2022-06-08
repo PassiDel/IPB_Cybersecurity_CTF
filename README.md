@@ -13,7 +13,7 @@ Team password: sanitization_is_hard
 - [x] [Web1](web1/README.md)
 - [x] [Web2](web2/README.md)
 - [x] [Web3](web3/README.md)
-- [ ] [Web4](web4/README.md)
+- [x] [Web4](web4/README.md)
 - [x] [Web5](web5/README.md)
 - [x] [Forensic1](forensic1/README.md)
 - [ ] [Forensic2](forensic2/README.md)

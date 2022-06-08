@@ -5,7 +5,7 @@ PORT=8100
 ```
 
 # Browser
-Open `http://$IP` in browser. shows packe with link to github about a bot who can execute shell commands.
+Open `http://$IP:$PORT` in browser. shows packe with link to github about a bot who can execute shell commands.
 
 Reponse Headers:
 ```
