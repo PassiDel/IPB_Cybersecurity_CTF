@@ -1,10 +1,3 @@
-# Cryptography 04
-
-Download [`flag.txt`](flag.txt) and [`encode.py`](encode.py).
-
-each char to ascii id, + 13, then all to array, then base64 the string representation of that array without brackets.
-
-```py
 import base64
 
 with open('flag.txt') as ff:
@@ -23,6 +16,3 @@ with open('flag.txt') as ff:
 		message += chr(num)
 
 	print(message)
-```
-
-`cyberctfd{1nv3r53_py7h0n}`
