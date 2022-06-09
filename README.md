@@ -20,7 +20,7 @@ Team password: sanitization_is_hard
 - [ ] [Forensic3](forensic3/README.md)
 - [x] [Linux1](linux1/README.md)
 - [ ] [Linux2](linux2/README.md)
-- [ ] [Linux3](linux3/README.md)
+- [x] [Linux3](linux3/README.md)
 - [x] [Crypto1](crypto1/README.md)
 - [x] [Crypto2](crypto2/README.md)
 - [ ] [Crypto3](crypto3/README.md)
