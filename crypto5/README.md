@@ -16,4 +16,6 @@ if the `=` is a space then the result is `THEFLAGISUWMDOTL9JLOUH`, if its not a 
 `THE FLAG IS UW8OTL9JLOUH` so `cyberctfd{uw8otl9jlouh}`,
 `THE FLAG IS UWMDOTL9JLOUH` so `cyberctfd{uwmdotl9jlouh}`
 
-both wrong lol.
+its uppercase.
+
+`cyberctfd{UW8OTL9JLOUH}`

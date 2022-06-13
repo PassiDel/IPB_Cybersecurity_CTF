@@ -25,4 +25,4 @@ Team password: sanitization_is_hard
 - [x] [Crypto2](crypto2/README.md)
 - [ ] [Crypto3](crypto3/README.md)
 - [x] [Crypto4](crypto4/README.md)
-- [ ] [Crypto5](crypto5/README.md)
+- [x] [Crypto5](crypto5/README.md)
