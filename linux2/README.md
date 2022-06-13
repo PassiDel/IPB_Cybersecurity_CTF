@@ -11,3 +11,6 @@ no success:
 $ find / -type f -exec grep -Hn 'cyberctfd' {} \;
 $ find / -type f -exec grep -Hn 'Y3liZXJj' {} \;
 ```
+
+its not `cyberctfd{/home/ctf}`
+
