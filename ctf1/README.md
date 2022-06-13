@@ -59,3 +59,134 @@ PORT     STATE SERVICE         VERSION
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 134.22 seconds
 ```
+
+## ssh 
+
+- login with root and password is possible
+- `Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic,password`
+
+## web
+### `$IP:66`
+python server, showing som sort of cloud upload stuff (maybe command injection?) 
+
+basically a backblaze clone, but login and navigation seems broken?
+
+#### gobuster
+```bash
+$ gobuster dir -u http://$IP:66 -w /usr/share/wordlists/dirb/common.txt -k 
+===============================================================
+Gobuster v3.1.0
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://192.168.10.18:66
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.1.0
+[+] Timeout:                 10s
+===============================================================
+2022/06/13 16:10:10 Starting gobuster in directory enumeration mode
+===============================================================
+/.bash_history        (Status: 200) [Size: 319]
+/index.htm            (Status: 200) [Size: 17477]
+/index_files          (Status: 301) [Size: 0] [--> /index_files/]
+                                                                 
+===============================================================
+2022/06/13 16:10:15 Finished
+===============================================================
+```
+
+```bash
+$ curl http://$IP:66/.bash_history
+nano /etc/issue
+nano /etc/hosts
+nano /etc/hostname
+ls
+crontab -e
+ls
+rm index.htm 
+wget 192.168.2.43:81/db7i.htm
+mv db7i.htm index.htm
+nano /etc/hostname
+nano /etc/hosts
+ls
+wget 192.168.2.43:81/logdel2
+bash logdel2
+wget 192.168.2.43:81/root.txt
+mv root.txt flag.txt
+nano flag.txt
+ls
+shutdown -h now
+ip a
+shutdown -h now
+```
+
+```bash
+$ curl http://$IP:66/flag.txt -k        
+cyberctfd{r5KYSTQmMve4KVIoaeaVQH4NUfD7caR6}
+```
+
+### `$IP:80`
+
+redirects to `$IP:443`
+
+### `$IP:443`
+apache server with php5.4.16 and perl.
+login screen
+
+#### gobuster
+
+```bash
+$ gobuster dir -u https://$IP -w /usr/share/wordlists/dirb/common.txt -k
+===============================================================
+Gobuster v3.1.0
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     https://192.168.10.18
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.1.0
+[+] Timeout:                 10s
+===============================================================
+2022/06/13 16:09:37 Starting gobuster in directory enumeration mode
+===============================================================
+/.hta                 (Status: 403) [Size: 206]
+/.htpasswd            (Status: 403) [Size: 211]
+/.htaccess            (Status: 403) [Size: 211]
+/cache                (Status: 302) [Size: 196] [--> /login.php##]
+/cachemgr.cgi         (Status: 302) [Size: 196] [--> /login.php##]
+/cachemgr             (Status: 302) [Size: 196] [--> /login.php##]
+/cgi-bin/             (Status: 403) [Size: 210]                   
+/css                  (Status: 301) [Size: 234] [--> https://192.168.10.18/css/]
+/images               (Status: 301) [Size: 237] [--> https://192.168.10.18/images/]
+/includes             (Status: 302) [Size: 196] [--> /login.php##]                 
+/include              (Status: 302) [Size: 196] [--> /login.php##]                 
+/index.php            (Status: 302) [Size: 0] [--> ./module/dashboard_view/index.php]
+/js                   (Status: 301) [Size: 233] [--> https://192.168.10.18/js/]      
+/modules              (Status: 302) [Size: 196] [--> /login.php##]                   
+/module               (Status: 302) [Size: 196] [--> /login.php##]                   
+/nagios               (Status: 302) [Size: 196] [--> /login.php##]                   
+                                                                                     
+===============================================================
+2022/06/13 16:09:39 Finished
+===============================================================
+```
+
+#### sql injection
+hasn't worked
+
+
+## influx
+
+```bash
+$ nflux -precision rfc339 -host $IP
+```
+
+
+
+
+## Flags
+User: `cyberctfd{r5KYSTQmMve4KVIoaeaVQH4NUfD7caR6}`
