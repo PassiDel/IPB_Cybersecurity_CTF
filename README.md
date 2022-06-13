@@ -6,7 +6,7 @@ Team password: sanitization_is_hard
 
 ## Challenges
 
-- [ ] [CTF1](ctf1/README.md)
+- [x] [CTF1](ctf1/README.md)
 - [ ] [CTF2](ctf2/README.md)
 - [ ] [CTF3](ctf3/README.md)
 - [ ] [CTF4](ctf4/README.md)

