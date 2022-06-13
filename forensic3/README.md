@@ -71,3 +71,5 @@ $ cat analise_forense_3.txt | cut -d ' ' -f1 | sort -n -t. -k1,1 -k2,2 -k3,3 -k4
 
 
 its not `cyberctfd{[22/Dec/2016:16:19:23 +0300]}` (from nslookup)
+its not `cyberctfd{[22/Dec/2016:16:18:08 +0300]}`
+its not `cyberctfd{[22/Dec/2016:16:11:41 +0300]}` (from trident)
