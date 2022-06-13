@@ -49,3 +49,22 @@ X-Frame-Options: M3 (model3) | B (reflector type) | I,IV,V (rotor types and orde
 the values correspond to enigma settings [online](https://cryptii.com/pipes/enigma-machine), but what is the input, what is the plugboard?
 
 ![Settings](enigma.png)
+
+the `main.js` has a `console.log` at the end:
+
+```js
+
+console.log("KPVBP DQRCI NYKWT JQTVY EUMUD YFZEN FXAMO ZECT");
+
+```
+
+used as the input, the result is
+```
+thefl agisj fkjru iawxm vdzwy gkncm ltgkj dxse
+the flag is jfkjruiawxmvdzwygkncmltgkjdxse
+
+JFKJRUIAWXMVDZWYGKNCMLTGKJDXSE
+
+```
+
+`cyberctfd{JFKJRUIAWXMVDZWYGKNCMLTGKJDXSE}`
