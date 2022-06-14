@@ -27,3 +27,30 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 332.80 seconds
 ````
+.git was readable so we look for the commits done
+we see that one of them is about the security in the login.php 
+So we used the git-dump to see the content on that pull 
+https://github.com/arthaud/git-dumper
+````bash
+$ git diff a4d900a8d85e8938d3601f3cef113ee293028e10
+index 8a0ff67..0904b19 100644
+--- a/login.php
++++ b/login.php
+@@ -2,7 +2,10 @@
+ session_start();
+ require 'config/config.php';
+ if($_SERVER['REQUEST_METHOD'] == 'POST'){
+-    if($_POST['email'] == "lush@admin.com" && $_POST['password'] == "321"){
++    $email = mysqli_real_escape_string($connect,htmlspecialchars($_POST['email']));
++    $pass = mysqli_real_escape_string($connect,htmlspecialchars($_POST['password']));
++    $check = $connect->query("select * from users where email='$email' and password='$pass' and id=1");
++    if($check->num_rows){
+         $_SESSION['userid'] = 1;
+         header("location:dashboard.php");
+         die();
+
+$ pip install git-dumper
+$ ./git_dumper.py http://192.168.10.17/.git/ ~/website
+
+````
+Now the content is in /website 
