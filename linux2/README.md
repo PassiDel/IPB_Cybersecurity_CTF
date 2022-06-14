@@ -36,7 +36,7 @@ As its said before the content from root is readable so in there we have the id_
 
 i tried to ssh to the machine with his ip 192.168.10.7 
 ```bash
-$ ssh root@192.168.10.7 -i id_rsa -o StrictHostKeyChecking=no  2>&1
+$ ssh root@192.168.10.7 -i id_rsa -o StrictHostKeyChecking=no 2>&1
 Pseudo-terminal will not be allocated because stdin is not a terminal.
 ssh: connect to host 192.168.10.7 port 22: Connection refused
 ````
