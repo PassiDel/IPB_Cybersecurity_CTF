@@ -32,4 +32,11 @@ SHELL=/bin/ash
 PWD=/home/ctf
 CHARSET=UTF-8
 ```
+As its said before the content from root is readable so in there we have the id_rsa
 
+i tried to ssh to the machine with his ip 192.168.10.7 
+ssh root@192.168.10.7 -i id_rsa -o StrictHostKeyChecking=no 
+The flag -o (options) StrictHostKeyChecking=no allow us to go throw the autentitaction
+It had the following error 
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+So instead of that i tried with the root@localhost instead and now you are connected
