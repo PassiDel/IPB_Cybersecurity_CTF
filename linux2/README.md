@@ -35,8 +35,17 @@ CHARSET=UTF-8
 As its said before the content from root is readable so in there we have the id_rsa
 
 i tried to ssh to the machine with his ip 192.168.10.7 
+```bash
 ssh root@192.168.10.7 -i id_rsa -o StrictHostKeyChecking=no 
+````
 The flag -o (options) StrictHostKeyChecking=no allow us to go throw the autentitaction
 It had the following error 
 Pseudo-terminal will not be allocated because stdin is not a terminal.
-So instead of that i tried with the root@localhost instead and now you are connected
+So instead of that i tried with the root@localhost instead and now you are connected it give a encrypted text now u just decrypt it
+```bash
+ssh root@192.168.10.7 -i id_rsa -o StrictHostKeyChecking=no
+echo "Y3liZXJjdGZkezFuZDMzZF93aDNyM193NDVfMX0=" | base64 -d
+cyberctfd{1nd33d_wh3r3_w45_1} 
+```
+
+
