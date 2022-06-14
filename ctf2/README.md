@@ -1,4 +1,4 @@
-``bash
+````bash
 $ nmap -sV -Pn -p- -A 192.168.10.15
 Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-14 06:08 EDT
 Nmap scan report for 192.168.10.15
@@ -17,5 +17,5 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 139.79 seconds
-``
+````
 
