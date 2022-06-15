@@ -9,7 +9,7 @@ Team password: sanitization_is_hard
 - [x] [CTF1](ctf1/README.md)
 - [ ] [CTF2](ctf2/README.md)
 - [x] [CTF3](ctf3/README.md)
-- [ ] [CTF4](ctf4/README.md)
+- [x] [CTF4](ctf4/README.md)
 - [x] [Web1](web1/README.md)
 - [x] [Web2](web2/README.md)
 - [x] [Web3](web3/README.md)
