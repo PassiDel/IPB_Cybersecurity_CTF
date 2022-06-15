@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap");
+
+*{
+    /* box-sizing: border-box; */
+    margin: 0;
+    padding: 0;
+}
+/* a{
+   text-decoration: none;
+
+} */
+
+body{
+    background: url('login.jpg') no-repeat center center fixed ;
+    background-size: cover;
+    background-repeat: repeat;
+    /* background-color:#9b59b6;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0; */
+
+}
+
+.container{
+    /* border: 3px solid white; */
+    border-radius: 15px;
+    width: 300px;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 20%;
+    left: 33%;
+
+
+
+}
+.container h1{
+
+
+    color: white;
+    text-align:center;
+    font-size:40px;
+    border-bottom:3px solid purple;
+    margin-bottom: 20px;
+    padding: 13px 0px;
+
+}
+
+.box{
+    width: 100%;
+    border-bottom:  1px solid purple;
+}
+
+.box input{
+    width: 75%;
+    font-size: 20px;
+    /* margin: 12px 0px ; */
+    padding: 15px 10px;;
+    border: none;
+    outline: none;
+    color: white;
+    background: none;
+
+}
+.box i{
+    color:white;
+    text-align: center;
+    padding: 3px;
+    /* margin-left: 4px; */
+}
+
+#btn{
+    cursor: pointer;
+    outline: none;
+    background: none;
+    color: white;
+    /* border-radius: 12px; */
+    width: 25%;
+    padding: 10px;
+    margin: 22px ;
+    border: 2px solid purple;
+    margin-left: 35%;
+
+
+
+}
+#btn:hover{
+    color: purple;
+    background: white;
+}
+.header{
+    background-color:#dce3e1;
+    border-bottom: : 13px solid #f0f0f0;
+    padding: 20px 50px ;
+    /* border-radius: 15px;
+    text-align: center; */
+}
