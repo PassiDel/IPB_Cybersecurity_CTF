@@ -46,7 +46,7 @@ Team password: sanitization_is_hard
 - [ ] [Linux2](linux2/WRITEUP.md)
 - [ ] [Linux3](linux3/WRITEUP.md)
 - [x] [Crypto1](crypto1/WRITEUP.md)
-- [ ] [Crypto2](crypto2/WRITEUP.md)
+- [x] [Crypto2](crypto2/WRITEUP.md)
 - [ ] [Crypto3](crypto3/WRITEUP.md)
 - [ ] [Crypto4](crypto4/WRITEUP.md)
 - [ ] [Crypto5](crypto5/WRITEUP.md)
