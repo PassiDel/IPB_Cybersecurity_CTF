@@ -26,3 +26,27 @@ Team password: sanitization_is_hard
 - [x] [Crypto3](crypto3/README.md)
 - [x] [Crypto4](crypto4/README.md)
 - [x] [Crypto5](crypto5/README.md)
+
+
+## Writeup
+
+- [ ] [CTF1](ctf1/WRITEUP.md)
+- [ ] [CTF2](ctf2/WRITEUP.md)
+- [ ] [CTF3](ctf3/WRITEUP.md)
+- [ ] [CTF4](ctf4/WRITEUP.md)
+- [ ] [Web1](web1/WRITEUP.md)
+- [ ] [Web2](web2/WRITEUP.md)
+- [ ] [Web3](web3/WRITEUP.md)
+- [ ] [Web4](web4/WRITEUP.md)
+- [ ] [Web5](web5/WRITEUP.md)
+- [ ] [Forensic1](forensic1/WRITEUP.md)
+- [ ] [Forensic2](forensic2/WRITEUP.md)
+- [ ] [Forensic3](forensic3/WRITEUP.md)
+- [ ] [Linux1](linux1/WRITEUP.md)
+- [ ] [Linux2](linux2/WRITEUP.md)
+- [ ] [Linux3](linux3/WRITEUP.md)
+- [ ] [Crypto1](crypto1/WRITEUP.md)
+- [ ] [Crypto2](crypto2/WRITEUP.md)
+- [ ] [Crypto3](crypto3/WRITEUP.md)
+- [ ] [Crypto4](crypto4/WRITEUP.md)
+- [ ] [Crypto5](crypto5/WRITEUP.md)
