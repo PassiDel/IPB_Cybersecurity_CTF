@@ -30,6 +30,8 @@ Team password: sanitization_is_hard
 
 ## Writeup
 
+Render with `pandoc -s -V geometry:margin=1in -H head.tex -o writeup.pdf WRITEUP.md */WRITEUP.md`
+
 - [ ] [CTF1](ctf1/WRITEUP.md)
 - [ ] [CTF2](ctf2/WRITEUP.md)
 - [ ] [CTF3](ctf3/WRITEUP.md)

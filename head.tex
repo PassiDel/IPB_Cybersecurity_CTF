@@ -1,0 +1,39 @@
+\usepackage{float}
+\usepackage{graphicx}
+
+% https://jdhao.github.io/2019/05/30/markdown2pdf_pandoc/
+% change background color for inline code in
+% markdown files. The following code does not work well for
+% long text as the text will exceed the page boundary
+\definecolor{bgcolor}{HTML}{E0E0E0}
+\let\oldtexttt\texttt
+
+\renewcommand{\texttt}[1]{
+  \colorbox{bgcolor}{\oldtexttt{#1}}
+  }
+
+\usepackage{framed}
+\usepackage{quoting}
+
+\definecolor{bgcolor}{HTML}{DADADA}
+\colorlet{shadecolor}{bgcolor}
+% define a new environment shadedquotation. You can change leftmargin and
+% rightmargin as you wish.
+\newenvironment{shadedquotation}
+ {\begin{shaded*}
+  \quoting[leftmargin=1em, rightmargin=0pt, vskip=0pt, font=itshape]
+ }
+ {\endquoting
+ \end{shaded*}
+ }
+
+%
+\def\quote{\shadedquotation}
+\def\endquote{\endshadedquotation}
+
+
+\hypersetup{
+pdftitle={CTF Writeup},
+pdfsubject={BIP Cybersecurity},
+pdfauthor={Pascal Syma, Adrian Sampedro Menchen, Lisardo Carretero Colmenar, Manuel Martinez Galera}
+}

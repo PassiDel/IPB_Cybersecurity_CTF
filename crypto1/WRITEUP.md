@@ -12,6 +12,6 @@ The name only contains the following characters: `+ - . < > [ ]`. Those characte
 
 Since this is a programming language, it can be executed using an [interpreter](https://gc.de/gc/brainfuck/).
 
-![Brainfuck Interpreter](brainfuck.png)
+![Brainfuck Interpreter](crypto1/brainfuck.png)
 
 When executed, the resulting output string is `cyberctfd{57r4n}`, which is the searched flag.
