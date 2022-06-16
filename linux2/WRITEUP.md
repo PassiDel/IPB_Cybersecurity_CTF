@@ -16,6 +16,9 @@ So I moved around the directories and found out that the directory `/root` has a
 As u can use ```bash $ cat id_rsa ``` and you can read the private key, we have two options:
 1. Copy this key to our machine
 2. Use this key locally to connect as root
-The optimal option is to connect locally via `ssh` to the machine so we use the ```bash $ ssh root@localmachine -i /root/.ssh/id_rsa ```
+The optimal option is to connect locally via `ssh` to the machine so we use.
+```bash 
+$ ssh root@localmachine -i /root/.ssh/id_rsa 
+```
 
 
