@@ -1,6 +1,6 @@
-# TASK -- Linux 2
+## Linux 02
 
-## Can you capture the flag? Execute the following command to obtain a reverse shell on your local machine.
+> Can you capture the flag? Execute the following command to obtain a reverse shell on your local machine.
 
 ```bash
 $ nc 192.168.10.7 9999
