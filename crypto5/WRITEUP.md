@@ -14,12 +14,15 @@ Then, we cut the last character of the lines, which symbols corresponds to morse
 
 > - ";" -> " "
 > - "_" -> "-"
+> - "." -> "."
 
 
 ```
 $ cat flag.txt | cut -c60 | awk '{print}' ORS='' | tr ';' ' ' | tr '_' '-' 
 - .... . ..-. .-.. .- --. .. ... ..- .-- --=-.. --- - .-.. ----. .--- .-.. --- ..- ....
 ```
+
+Using a classic [morse decorder](https://morsedecoder.com/).
 
 We considered if `=` was not an space so the output is:
 
