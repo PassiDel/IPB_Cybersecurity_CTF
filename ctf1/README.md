@@ -179,7 +179,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 hasn't worked
 
 #### meterpreter
-the running version (5.2) is vulnerable to RCE
+the running version (5.3) is vulnerable to RCE
 ```bash
 $ msfconsole
 
