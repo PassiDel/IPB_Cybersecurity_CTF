@@ -19,9 +19,7 @@ Last-Modified: Sat, 21 May 2022 11:14:11 GMT
 X-Frame-Options: M3 (model3) | B (reflector type) | I,IV,V (rotor types and order) | J,T,V (rotors initial value) | 1,1,1 (rotors ring setting)
 ```
 
-The values of the X-Fram-Options corresponds to enigma settings, so we set them in an online enigma decoder:
-
-[online](https://cryptii.com/pipes/enigma-machine)
+The values of the X-Fram-Options corresponds to enigma settings, so we set them in an [online enigma decoder](https://cryptii.com/pipes/enigma-machine):
 
 ![Settings](enigma.png)
 
