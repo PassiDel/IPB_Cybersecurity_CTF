@@ -7,7 +7,7 @@
 
 When opening the website corresponding to our IP, we realise that the title is "enigma machine" and the content is just a template.
 
-### curl
+
 The website sets an unusual X-Frame-Options:
 ```bash
 $ curl -I http://$IP                                                
@@ -34,8 +34,8 @@ console.log("KPVBP DQRCI NYKWT JQTVY EUMUD YFZEN FXAMO ZECT");
 
 ```
 
-used as the input, the result is
-```
+Used as the input, the result is:
+```md
 thefl agisj fkjru iawxm vdzwy gkncm ltgkj dxse
 the flag is jfkjruiawxmvdzwygkncmltgkjdxse
 

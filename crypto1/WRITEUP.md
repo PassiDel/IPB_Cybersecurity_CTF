@@ -1,3 +1,5 @@
+\clearpage
+# Cryptography
 ## Cryptography 01
 > The flag is hidden on this file, can you decode it?
 

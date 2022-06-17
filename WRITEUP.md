@@ -37,6 +37,7 @@ Responsible: Tiago Pedrosa
 \pagenumbering{gobble}
 \clearpage
 \tableofcontents
+\clearpage
 \listoffigures
 \newpage
 
@@ -44,6 +45,7 @@ Responsible: Tiago Pedrosa
 \setcounter{page}{1}
 
 # Flags
+This CTF consists of 20 challenges in five categories: Cryptography, CTF, Forensic, Linux and Web Hacking.
 
 - Cryptography 01: `cyberctfd{57r4n}`
 - Cryptography 02: `cyberctfd{7h15_15_7h3_fl46_c4p741n}`
@@ -73,6 +75,3 @@ Responsible: Tiago Pedrosa
 - Web Hacking 03: `cyberctfd{br0b0t_1s_pr3tty_c00l}`
 - Web Hacking 04: `cyberctfd{d0n7_5pl17_m3_4p4r7}`
 - Web Hacking 05: `cyberctfd{1_4m_r007}`
-
-# Challenges
-This CTF consists of 20 challenges in five categories: Cryptography, CTF, Forensic, Linux and Web Hacking.

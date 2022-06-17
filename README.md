@@ -30,23 +30,23 @@ Team password: sanitization_is_hard
 
 ## Writeup
 
-Render with `pandoc -s -V geometry:margin=1in -H head.tex -o writeup.pdf WRITEUP.md */WRITEUP.md`
+Render with `pandoc -s -V geometry:margin=1in -H head.tex -o IPB_BIP_Second_Practical_Assignment_Syma_Menchen_Colmenar_Galera.pdf WRITEUP.md */WRITEUP.md`
 
-- [ ] [CTF1](ctf1/WRITEUP.md)
-- [ ] [CTF2](ctf2/WRITEUP.md)
+- [x] [CTF1](ctf1/WRITEUP.md)
+- [x] [CTF2](ctf2/WRITEUP.md)
 - [x] [CTF3](ctf3/WRITEUP.md)
-- [ ] [CTF4](ctf4/WRITEUP.md)
-- [ ] [Web1](web1/WRITEUP.md)
-- [ ] [Web2](web2/WRITEUP.md)
-- [ ] [Web3](web3/WRITEUP.md)
-- [ ] [Web4](web4/WRITEUP.md)
-- [ ] [Web5](web5/WRITEUP.md)
-- [ ] [Forensic1](forensic1/WRITEUP.md)
-- [ ] [Forensic2](forensic2/WRITEUP.md)
+- [x] [CTF4](ctf4/WRITEUP.md)
+- [x] [Web1](web1/WRITEUP.md)
+- [x] [Web2](web2/WRITEUP.md)
+- [x] [Web3](web3/WRITEUP.md)
+- [x] [Web4](web4/WRITEUP.md)
+- [x] [Web5](web5/WRITEUP.md)
+- [x] [Forensic1](forensic1/WRITEUP.md)
+- [x] [Forensic2](forensic2/WRITEUP.md)
 - [x] [Forensic3](forensic3/WRITEUP.md)
-- [ ] [Linux1](linux1/WRITEUP.md)
-- [ ] [Linux2](linux2/WRITEUP.md)
-- [ ] [Linux3](linux3/WRITEUP.md)
+- [x] [Linux1](linux1/WRITEUP.md)
+- [x] [Linux2](linux2/WRITEUP.md)
+- [x] [Linux3](linux3/WRITEUP.md)
 - [x] [Crypto1](crypto1/WRITEUP.md)
 - [x] [Crypto2](crypto2/WRITEUP.md)
 - [x] [Crypto3](crypto3/WRITEUP.md)
