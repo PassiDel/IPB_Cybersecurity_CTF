@@ -42,9 +42,9 @@ So we have this relevant information:
 
 So if we search the ip in the broswer we can see this is the main page
 
-![Main page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_095914094.png)
+![Main page DarkHoleV2](ctf4/imagen_2022-06-17_095914094.png)
 
 In this page there is any information relevant or important for us, so we look now in the login.php
 
-![Login page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_100010931.png)
+![Login page DarkHoleV2](ctf4/imagen_2022-06-17_100010931.png)
 
