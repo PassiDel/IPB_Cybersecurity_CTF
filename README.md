@@ -43,7 +43,7 @@ Render with `pandoc -s -V geometry:margin=1in -H head.tex -o writeup.pdf WRITEUP
 - [ ] [Web5](web5/WRITEUP.md)
 - [ ] [Forensic1](forensic1/WRITEUP.md)
 - [ ] [Forensic2](forensic2/WRITEUP.md)
-- [ ] [Forensic3](forensic3/WRITEUP.md)
+- [x] [Forensic3](forensic3/WRITEUP.md)
 - [ ] [Linux1](linux1/WRITEUP.md)
 - [ ] [Linux2](linux2/WRITEUP.md)
 - [ ] [Linux3](linux3/WRITEUP.md)
