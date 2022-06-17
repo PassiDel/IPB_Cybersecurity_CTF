@@ -1,7 +1,8 @@
 # CTF 03
-```bash
-IP=192.168.10.16
-```
+
+>IP=192.168.10.16
+>
+>The flag is stored in the root.txt file.
 
 ## nmap
 
