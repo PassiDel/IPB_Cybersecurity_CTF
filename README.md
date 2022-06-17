@@ -49,6 +49,6 @@ Render with `pandoc -s -V geometry:margin=1in -H head.tex -o writeup.pdf WRITEUP
 - [ ] [Linux3](linux3/WRITEUP.md)
 - [x] [Crypto1](crypto1/WRITEUP.md)
 - [x] [Crypto2](crypto2/WRITEUP.md)
-- [ ] [Crypto3](crypto3/WRITEUP.md)
+- [x] [Crypto3](crypto3/WRITEUP.md)
 - [x] [Crypto4](crypto4/WRITEUP.md)
 - [ ] [Crypto5](crypto5/WRITEUP.md)
