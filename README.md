@@ -34,7 +34,7 @@ Render with `pandoc -s -V geometry:margin=1in -H head.tex -o writeup.pdf WRITEUP
 
 - [ ] [CTF1](ctf1/WRITEUP.md)
 - [ ] [CTF2](ctf2/WRITEUP.md)
-- [ ] [CTF3](ctf3/WRITEUP.md)
+- [x] [CTF3](ctf3/WRITEUP.md)
 - [ ] [CTF4](ctf4/WRITEUP.md)
 - [ ] [Web1](web1/WRITEUP.md)
 - [ ] [Web2](web2/WRITEUP.md)
@@ -51,4 +51,4 @@ Render with `pandoc -s -V geometry:margin=1in -H head.tex -o writeup.pdf WRITEUP
 - [x] [Crypto2](crypto2/WRITEUP.md)
 - [x] [Crypto3](crypto3/WRITEUP.md)
 - [x] [Crypto4](crypto4/WRITEUP.md)
-- [ ] [Crypto5](crypto5/WRITEUP.md)
+- [x] [Crypto5](crypto5/WRITEUP.md)
