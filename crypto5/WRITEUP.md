@@ -11,7 +11,9 @@ The flag is hidden in Morse code, good luck.
 Then, we cut the last character of the lines, which symbols corresponds to morse code equivalences as follows:
 
 > ; ->  
+> 
 > _ -> -
+> 
 > . -> .
 
 
@@ -25,5 +27,3 @@ Using a classic [morse decoder](https://morsedecoder.com/), the results says:
 ```
 THE FLAG IS UW8OTL9JLOUH
 ```
-
-Flag: `cyberctfd{UW8OTL9JLOUH}`
