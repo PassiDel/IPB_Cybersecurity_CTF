@@ -16,7 +16,7 @@
 First thing to do is to scan for open ports.
 
 ```bash 
-$ nmap -sV -Pn -p- -A $IP
+$ nmap -sV -Pn -p- -A 192.168.10.17
 Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-14 06:40 EDT
 Nmap scan report for 192.168.10.17
 Host is up (0.0043s latency).

