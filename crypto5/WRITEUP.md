@@ -22,7 +22,7 @@ $ cat flag.txt | cut -c60 | awk '{print}' ORS='' | tr ';' ' ' | tr '_' '-'
 - .... . ..-. .-.. .- --. .. ... ..- .-- --=-.. --- - .-.. ----. .--- .-.. --- ..- ....
 ```
 
-Using a classic [morse decorder](https://morsedecoder.com/).
+Using a classic [morse decoder](https://morsedecoder.com/).
 
 We considered if `=` was not an space so the output is:
 
